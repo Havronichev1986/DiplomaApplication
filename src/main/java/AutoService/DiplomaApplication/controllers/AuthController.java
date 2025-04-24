@@ -17,11 +17,6 @@ import java.util.Map;
 public class AuthController {
     private final AuthService authService;
 
-//    @PostMapping("/register")
-//    public ResponseEntity<String> register(@RequestBody RegisterRequest request){
-//        return ResponseEntity.ok(authService.register((request)));
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         String token = authService.register(request);
