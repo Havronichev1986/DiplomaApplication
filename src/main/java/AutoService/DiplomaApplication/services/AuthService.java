@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -28,7 +30,7 @@ public class AuthService {
         user.setRole(Role.USER);  // Роль по умолчанию — USER
         userRepository.save(user);
 
-        return jwtService.generateToken(user.getEmail(),user.getRole()); // передаем роль в JWT
+        return jwtService.generateToken(user.getEmail(), List.of(user.getRole())); // передаем роль в JWT
     }
 
     public AuthResponse auth(AuthRequest request){
@@ -38,7 +40,7 @@ public class AuthService {
         if (!passwordEncoder.matches(request.getPassword(),user.getPassword())){
             throw new RuntimeException("Неверный пароль");
         }
-        String token = jwtService.generateToken(user.getEmail(),user.getRole());
+        String token = jwtService.generateToken(user.getEmail(),List.of(user.getRole()));
         return new AuthResponse(token);
     }
 }
