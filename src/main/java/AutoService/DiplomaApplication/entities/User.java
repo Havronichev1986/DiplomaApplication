@@ -28,6 +28,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private List<Cars> cars;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(role);  // роль как authorities
