@@ -3,9 +3,7 @@ package AutoService.DiplomaApplication.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
-import org.hibernate.sql.ast.tree.expression.Collation;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -28,9 +26,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
-    private List<Cars> cars;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Car> cars;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
